@@ -13,4 +13,12 @@ class App extends Component {
     this.setState({ office });
     console.log(office);
   }
+  render() {
+    return (
+      <div>
+        <h1>The Office</h1>
+        <h2></h2>
+      </div>
+    );
+  }
 }
