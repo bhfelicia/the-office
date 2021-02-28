@@ -4,12 +4,21 @@ const {
 } = require("./db");
 
 const express = require("express");
+const path = require("path");
 
 const app = express();
 
+app.use("/assets", express.static(path.join(__dirname, "assets")));
+
+app.use("/dist", express.static(path.join(__dirname, "dist")));
+
+app.get("/", (req, res, next) =>
+  res.sendFile(path.join(__dirname, "/assets/index.html"))
+);
+
 app.get("/api/office", async (req, res, next) => {
   try {
-    const office = await Office.findAll();
+    const office = await Office.findOne();
     res.send(office);
   } catch (error) {
     next(error);
