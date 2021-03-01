@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import EmployeeList from "./EmployeeList";
 
 class App extends Component {
   constructor() {
@@ -7,12 +8,17 @@ class App extends Component {
     this.state = {
       office: {},
       employeeList: [],
+      showEmployees: false,
     };
+    this.displayEmployees = this.displayEmployees.bind(this);
   }
   async componentDidMount() {
     const office = (await axios.get("/api/office")).data;
     this.setState({ office });
-    console.log(office);
+  }
+  displayEmployees() {
+    const { showEmployees } = this.state;
+    this.setState({ showEmployees: !showEmployees });
   }
   render() {
     const { office } = this.state;
@@ -22,9 +28,15 @@ class App extends Component {
         <h2>A {office.industry} company</h2>
         <div>Located in lovely {office.location}</div>
         <hr></hr>
-        <div>
-          <a href="/employees">So who works here, you ask?</a>
+        <div id="employees" onClick={() => this.displayEmployees()}>
+          <a href="#">So who works here, you ask?</a>
         </div>
+        {this.state.showEmployees && (
+          <div>
+            <hr></hr>
+            <EmployeeList />
+          </div>
+        )}
       </div>
     );
   }
