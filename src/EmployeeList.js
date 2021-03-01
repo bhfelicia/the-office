@@ -19,6 +19,12 @@ class EmployeeList extends Component {
     });
     this.setState({ selectedUserId: window.location.hash.slice(1) });
   }
+  componentWillUnmount() {
+    window.removeEventListener("hashchange", () => {
+      const employeeId = window.location.hash.slice(1);
+      this.setState({ employeeId: employeeId });
+    });
+  }
 
   render() {
     const { employeeList, employeeId } = this.state;
@@ -26,7 +32,10 @@ class EmployeeList extends Component {
       <div>
         {employeeList.map((employee) => {
           return (
-            <div key={employee.id}>
+            <div
+              key={employee.id}
+              className={employee.id === Number(employeeId) ? "selected" : ""}
+            >
               <a href={`#${employee.id}`}>{employee.name}</a>
               {employee.bossId === null ? ", Aka the Big Boss" : ""}
             </div>
