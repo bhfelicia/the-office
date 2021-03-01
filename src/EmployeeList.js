@@ -9,21 +9,21 @@ class EmployeeList extends Component {
       employeeList: [],
       employeeId: "",
     };
+    this.hashChange = this.hashChange.bind(this);
+  }
+  hashChange() {
+    const employeeId = window.location.hash.slice(1);
+    this.setState({ employeeId: employeeId });
   }
   async componentDidMount() {
     const employeeList = (await axios.get("/api/employees")).data;
     this.setState({ employeeList });
-    window.addEventListener("hashchange", () => {
-      const employeeId = window.location.hash.slice(1);
-      this.setState({ employeeId: employeeId });
-    });
+    window.addEventListener("hashchange", this.hashChange);
     this.setState({ selectedUserId: window.location.hash.slice(1) });
   }
+
   componentWillUnmount() {
-    window.removeEventListener("hashchange", () => {
-      const employeeId = window.location.hash.slice(1);
-      this.setState({ employeeId: employeeId });
-    });
+    window.removeEventListener("hashchange", this.hashChange);
   }
 
   render() {
