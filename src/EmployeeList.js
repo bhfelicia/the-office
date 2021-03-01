@@ -15,25 +15,27 @@ class EmployeeList extends Component {
     this.setState({ employeeList });
     window.addEventListener("hashchange", () => {
       const employeeId = window.location.hash.slice(1);
-      console.log(employeeId);
       this.setState({ employeeId: employeeId });
     });
     this.setState({ selectedUserId: window.location.hash.slice(1) });
   }
+
   render() {
     const { employeeList, employeeId } = this.state;
-    return employeeList.map((employee) => {
-      return (
-        <div key={employee.id}>
-          {" "}
-          <a href={`#${employee.id}`}>{employee.name}</a>
-          {employee.bossId === null ? ", Aka the Big Boss" : ""}
-          <div>
-            {!!employeeId && <SingleEmployee employeeId={employeeId} />}
-          </div>
-        </div>
-      );
-    });
+    return (
+      <div>
+        {employeeList.map((employee) => {
+          return (
+            <div key={employee.id}>
+              <a href={`#${employee.id}`}>{employee.name}</a>
+              {employee.bossId === null ? ", Aka the Big Boss" : ""}
+            </div>
+          );
+        })}
+        <hr></hr>
+        <div>{!!employeeId && <SingleEmployee employeeId={employeeId} />}</div>
+      </div>
+    );
   }
 }
 
