@@ -7,12 +7,13 @@
     "build": "webpack",
     "build:dev": "npm run build -- --mode=development --watch",
     "start:dev": "nodemon server & npm run build:dev",
-    "start": "npm run build && nodemon server"
+    "start": "npm run build && node server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/preset-env": "^7.13.9",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "express": "^4.17.1",
